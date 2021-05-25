@@ -1,5 +1,7 @@
 package fdm
 
+import java.time.YearMonth
+
 /**
  * Scala supports tuples, which are a generic way to store two or more pieces of information at
  * the same time. For example, the tuple `("Alligator", 42)` stores both a string, as the first
@@ -28,7 +30,7 @@ object tuples {
    * hold both the name of a `Person` (as a `String`), together with the age of the `Person` (as an
    * `Int`).
    */
-  type Person = TODO
+  type Person = (String, Int)
 
   /**
    * EXERCISE 2
@@ -36,7 +38,7 @@ object tuples {
    * Using the `Person` type alias that you just created, construct a value that has type `Person`,
    * whose name is "Sherlock Holmes", and whose age is 42.
    */
-  lazy val sherlockHolmes: Person = TODO
+  lazy val sherlockHolmes: Person = ("Sherlock Holmes", 42)
 
   /**
    * EXERCISE 3
@@ -45,7 +47,7 @@ object tuples {
    * hold a credit card number (as a `String`), a credit card expiration date (as a
    * `java.time.YearMonth`), a full name (as a `String`), and a security code (as a `Short`).
    */
-  type CreditCard = TODO
+  type CreditCard = (String, YearMonth, String, Short)
 
   /**
    * EXERCISE 4
@@ -53,7 +55,7 @@ object tuples {
    * Using the `CreditCard` type alias that you just created, construct a value that has type
    * `CreditCard`, with details invented by you.
    */
-  lazy val creditCard: CreditCard = TODO
+  lazy val creditCard: CreditCard = ("1214", YearMonth.now(), "Dan", 3434)
 }
 
 /**
@@ -83,7 +85,7 @@ object case_class_basics {
    * (as a `String` stored in a field called `name`), together with the age of the `Person` (as an
    * `Int` stored in a field called `age`).
    */
-  final case class Person()
+  final case class Person(name:String, age:Int)
 
   /**
    * EXERCISE 2
@@ -91,7 +93,7 @@ object case_class_basics {
    * Using the `Person` case class that you just created, construct a value that has type `Person`,
    * whose name is "Sherlock Holmes", and whose age is 42.
    */
-  lazy val sherlockHolmes: Person = TODO
+  lazy val sherlockHolmes: Person = Person("Sherlock", 54)
 
   /**
    * EXERCISE 3
