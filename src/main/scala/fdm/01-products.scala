@@ -85,7 +85,7 @@ object case_class_basics {
    * (as a `String` stored in a field called `name`), together with the age of the `Person` (as an
    * `Int` stored in a field called `age`).
    */
-  final case class Person(name:String, age:Int)
+  final case class Person(name: String, age: Int)
 
   /**
    * EXERCISE 2
@@ -103,7 +103,7 @@ object case_class_basics {
    * `java.time.YearMonth` stored in a field called `expDate`), a full name (as a `String` stored in
    * a field called `name`), and a security code (as a `Short` in a field called `securityCode`).
    */
-  final case class CreditCard()
+  final case class CreditCard(number: String, expDate: YearMonth, name: String, securityCode: Short)
 
   /**
    * EXERCISE 4
@@ -111,7 +111,7 @@ object case_class_basics {
    * Using the `CreditCard` case class that you just created, construct a value that has type
    * `CreditCard`, with details invented by you.
    */
-  lazy val creditCard: CreditCard = TODO
+  lazy val creditCard: CreditCard = CreditCard("1234", YearMonth.now(), "Dan", 1234)
 }
 
 /**
@@ -131,7 +131,7 @@ object case_class_utilities {
    * Construct and compare two values of type `Person` to see if they are equal to each other.
    * Compare using the `==` method, which is available on every value of type `Person`.
    */
-  lazy val comparison: Boolean = TODO
+  lazy val comparison: Boolean = Person("Dan", 54) == Person("Dan", 54)
 
   /**
    * EXERCISE 2
@@ -141,7 +141,7 @@ object case_class_utilities {
    * hash code of the `Person` values by calling the `hashCode` method, which is available on every
    * value of type `Person`.
    */
-  lazy val hashComparison: Boolean = TODO
+  lazy val hashComparison: Boolean = Person("Dan", 54).hashCode() == Person("Dan", 54).hashCode()
 
   /**
    * EXERCISE 3
@@ -152,7 +152,7 @@ object case_class_utilities {
    * to change in the copy operation.
    */
   lazy val sherlockHolmes: Person = Person("Sherlock Holmes", 42)
-  lazy val youngerHolmes: Person  = TODO
+  lazy val youngerHolmes: Person  = sherlockHolmes.copy(age = sherlockHolmes.age - 10)
 }
 
 /**
@@ -173,9 +173,9 @@ object product_patterns {
    * called `age`. On the right hand side of the arrow (`=>`), use a Scala `println` statement to
    * print out the name and the age of the specified person.
    */
-  def example1 =
+  def example1(): Unit =
     sherlockHolmes match {
-      case Person(name, age) => TODO
+      case Person(name, age) => println(s"Name: $name Age: $age")
     }
 
   /**
@@ -185,13 +185,15 @@ object product_patterns {
    * `name`, and the price of the product into a variable called `price`. Then use a Scala
    * `println` statement to print out the name and price of the product.
    */
-  def example2 =
-    ("Suitcase", 19.95)
+  def example2(): Unit =
+    ("Suitcase", 19.95) match {
+      case (name, price) => println(s"Name: $name Price: $price")
+    }
 
   final case class Employee(name: String, address: Address)
   final case class Address(street: String, number: Int)
 
-  val dilbert = Employee("Dilbert", Address("Baker", 221))
+  val dilbert: Employee = Employee("Dilbert", Address("Baker", 221))
 
   /**
    * EXERCISE 3
@@ -199,7 +201,9 @@ object product_patterns {
    * Pattern match on `dilbert` and extract out and print the address number. This will involve
    * using a nested pattern match.
    */
-  dilbert todo
+  dilbert match {
+    case Employee(_, Address(_, number)) => println(s"Address nr: $number")
+  }
 
   /**
    * EXERCISE 4
@@ -210,7 +214,10 @@ object product_patterns {
    * Print out the name in each case. Note the ordering of case evaluation, which proceeds from top
    * to bottom.
    */
-  dilbert todo
+  dilbert match {
+    case Employee("Dilbert", _) => println("Dilbert")
+    case Employee(name, _)      => println(s"Name: $name")
+  }
 
   /**
    * EXERCISE 5
@@ -222,7 +229,10 @@ object product_patterns {
    * that starts with the string `"B"`, and a catch all case that matches all patterns. In both
    * cases, print out the name of the street.
    */
-  dilbert todo
+  dilbert match {
+    case Employee(_, address) if address.street.startsWith("B") => println(s"Street name: ${address.street}")
+    case Employee(_, address)                                   => println(s"Street name: ${address.street}")
+  }
 
   /**
    * EXERCISE 6
